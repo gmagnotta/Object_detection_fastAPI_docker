@@ -3,26 +3,26 @@ import requests
 # API endpoint URL
 api_endpoint = "http://localhost:8000/detect/"
 
-# Resim dosyasının adı
+# Image file name
 image_filename = "bus.jpg"
 
-# Etiket parametresi
+# Label parameter
 label = ""
 
-# Resmi yükleme
+# Upload the image
 files = {"image": open(image_filename, "rb")}
 
-# API endpoint URL'sini ve etiket parametresini birleştirme
+# Concatenate API endpoint URL with label parameter if provided
 api_endpoint_with_label = f"{api_endpoint}?label={label}" if label else api_endpoint
 
-# POST isteği gönderme
+# Send a POST request
 response = requests.post(api_endpoint_with_label, files=files)
 
-# Yanıtı kontrol etme
+# Check the response
 if response.status_code == 200:
-    # Başarılı yanıt
+    # Successful response
     result = response.json()
     print(result)
 else:
-    # Hata durumu
+    # Error response
     print("API request failed:", response.text)
