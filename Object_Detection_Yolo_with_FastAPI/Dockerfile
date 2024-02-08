@@ -1,20 +1,20 @@
-# Python imajını kullanın
+# Use the Python image
 FROM python:3.10
 
-# Gerekli paketleri yükleyin
+# Install necessary packages
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     libgl1
 
-# Uygulama dosyalarını Docker imajına kopyala
+# Copy application files into the Docker image
 COPY . /app
 
-# Uygulamanın çalıştırılacağı dizini belirtin
+# Specify the directory where the application will run
 WORKDIR /app
 
-# Gerekli Python paketlerini yükleyin
+# Install necessary Python packages
 RUN pip install -r requirements.txt
 
-# Uygulamayı çalıştırın
+# Run the application
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
