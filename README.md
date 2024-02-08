@@ -49,7 +49,7 @@ print("Model exported to ONNX format successfully.")
 
 # Load the YOLO model
 onnx_model = YOLO(onnx_model_path, task='detect')
-source = str("bus.jpg")
+source = str("https://ultralytics.com/images/bus.jpg")
 
 # Perform object detection
 # results image saving
