@@ -39,7 +39,7 @@ Example request:
 
 ```bash
 curl -X POST 'http://localhost:8000/detect/person' -H 'accept: application/json' -H 'Content-Type: multipart/form-data' -F 'image=@bus.JPG;type=image/jpeg'
-
+```
 
 ## Design Decisions
 This project is built using the FastAPI framework, chosen for its high performance and ease of use. The YOLO model is utilized for object detection due to its fast and accurate performance. Additionally, the pre-trained YOLO model is converted to the ONNX format for improved efficiency.
@@ -49,7 +49,19 @@ The project is designed to run in a Docker environment.
 Uploaded image files must adhere to specific dimensions and formats.
 
 
+## Testing
+To run tests, you can use the docker_image_test.py file located in the test_images folder. Ensure that you have Python installed on your system.
 
+```bash
+    python docker_image_test.py
+```
+
+The tests should produce the following output:
+
+```JSON
+Test Status: {'Test 1': 'Success', 'Test 2': 'Success', 'Test 3': 'Success'}
+
+```
 
 
 
