@@ -674,3 +674,6 @@ For those seeking slim Python images, it's advisable to consider using the "slim
 
 
 
+##  Sources
+
+https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker/blob/master/README.md
