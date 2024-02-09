@@ -55,6 +55,7 @@ Uploaded image files must adhere to specific dimensions and formats.
 
 ## Testing
 To run tests, you can use the docker_image_test.py file located in the test_images folder. Ensure that you have Python installed on your system.
+![Swagger UI](https://iili.io/J1a7gOx.md.png)
 
 ```bash
     python docker_image_test.py
