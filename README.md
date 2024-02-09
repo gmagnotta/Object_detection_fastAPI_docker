@@ -29,6 +29,10 @@ To run the project locally, ensure that Docker is installed on your machine. Fol
 
 After successful execution of these steps, you can access the API at http://localhost:8000.
 
+![Swagger UI](https://iili.io/J1a7uHJ.png)
+
+
+
 ## API Usage
 
 You can use the following API endpoint to detect objects:
