@@ -1,7 +1,3 @@
-## <div align="center">Dockerized Microservice for Object Detection with YOLO</div>
-
-## <div align="center">Dockerized Microservice for Object Detection with YOLO ONNX Model Deployment and Test</div>
-
 # Dockerized Microservice for Object Detection with YOLO
 
 This project provides a microservice for object detection using the YOLO (You Only Look Once) model. The application is containerized with Docker, making it easy to deploy and run.
