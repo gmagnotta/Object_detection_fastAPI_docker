@@ -1,3 +1,68 @@
+# Dockerized Microservice for Object Detection with YOLO
+
+This project provides a microservice for object detection using the YOLO (You Only Look Once) model. The application is containerized with Docker, making it easy to deploy and run.
+
+## Project Setup
+
+To run the project locally, ensure that Docker is installed on your machine. Follow these steps to set up the project:
+
+1. Clone this repository to your local machine:
+
+    ```bash
+    git clone https://github.com/enesagu/Object_detection_fastAPI_docker.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd Object_detection_fastAPI_docker
+    cd Object_Detection_Yolo_with_FastAPI
+    ```
+
+3. Build the Docker image and run the application:
+
+    ```bash
+    docker build -t object_detection .
+    docker run -d -p 8000:8000 object_detection
+
+    ```
+
+After successful execution of these steps, you can access the API at http://localhost:8000.
+
+## API Usage
+
+You can use the following API endpoint to detect objects:
+
+- **POST /detect/<label?>**: Use this endpoint to upload an image file and detect objects with a specific label. The label parameter is optional.
+
+Example request:
+
+```bash
+curl -X POST 'http://localhost:8000/detect/person' -H 'accept: application/json' -H 'Content-Type: multipart/form-data' -F 'image=@bus.JPG;type=image/jpeg'
+```
+
+## Design Decisions
+This project is built using the FastAPI framework, chosen for its high performance and ease of use. The YOLO model is utilized for object detection due to its fast and accurate performance. Additionally, the pre-trained YOLO model is converted to the ONNX format for improved efficiency.
+
+## Assumptions Made
+The project is designed to run in a Docker environment.
+Uploaded image files must adhere to specific dimensions and formats.
+
+
+## Testing
+To run tests, you can use the docker_image_test.py file located in the test_images folder. Ensure that you have Python installed on your system.
+
+```bash
+    python docker_image_test.py
+```
+
+The tests should produce the following output:
+
+```JSON
+Test Status: {'Test 1': 'Success', 'Test 2': 'Success', 'Test 3': 'Success'}
+
+```
+
 
 
 ## <div align="center">Documentation</div>
@@ -563,46 +628,6 @@ You can set it like:
 docker run -d -p 80:8080 -e PRE_START_PATH="/custom/script.sh" myimage
 ```
 
-### Custom Gunicorn configuration file
-
-The image includes a default Gunicorn Python config file at `/gunicorn_conf.py`.
-
-It uses the environment variables declared above to set all the configurations.
-
-You can override it by including a file in:
-
-* `/app/gunicorn_conf.py`
-* `/app/app/gunicorn_conf.py`
-* `/gunicorn_conf.py`
-
-### Custom `/app/prestart.sh`
-
-If you need to run anything before starting the app, you can add a file `prestart.sh` to the directory `/app`. The image will automatically detect and run it before starting everything.
-
-For example, if you want to add Alembic SQL migrations (with SQLALchemy), you could create a `./app/prestart.sh` file in your code directory (that will be copied by your `Dockerfile`) with:
-
-```bash
-#! /usr/bin/env bash
-
-# Let the DB start
-sleep 10;
-# Run migrations
-alembic upgrade head
-```
-
-and it would wait 10 seconds to give the database some time to start and then run that `alembic` command.
-
-If you need to run a Python script before starting the app, you could make the `/app/prestart.sh` file run your Python script, with something like:
-
-```bash
-#! /usr/bin/env bash
-
-# Run custom Python script before starting
-python /app/my_custom_prestart_script.py
-```
-
-You can customize the location of the prestart script with the environment variable `PRE_START_PATH` described above.
-
 
 ##  Alpine Python Warning
 
@@ -618,4 +643,6 @@ When installing Python packages in Alpine, you may encounter difficulties due to
 Using Alpine for Python images can also significantly increase build times and resource consumption. Building dependencies takes longer, requiring more CPU time and energy for each build, ultimately increasing the carbon footprint of the project.
 
 For those seeking slim Python images, it's advisable to consider using the "slim" versions based on Debian. These images offer a balance between size and usability, providing a more efficient solution for Python development.
+
+
 
