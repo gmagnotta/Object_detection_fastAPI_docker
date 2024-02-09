@@ -1,3 +1,5 @@
+## <div align="center">Dockerized Microservice for Object Detection with YOLO</div>
+
 
 
 ## <div align="center">Documentation</div>
@@ -578,4 +580,56 @@ When installing Python packages in Alpine, you may encounter difficulties due to
 Using Alpine for Python images can also significantly increase build times and resource consumption. Building dependencies takes longer, requiring more CPU time and energy for each build, ultimately increasing the carbon footprint of the project.
 
 For those seeking slim Python images, it's advisable to consider using the "slim" versions based on Debian. These images offer a balance between size and usability, providing a more efficient solution for Python development.
+
+
+
+## <div align="center">Dockerized Microservice for Object Detection with YOLO ONNX Model Deployment and Test</div>
+
+# Dockerized Microservice for Object Detection with YOLO
+
+This project provides a microservice for object detection using the YOLO (You Only Look Once) model. The application is containerized with Docker, making it easy to deploy and run.
+
+## Project Setup
+
+To run the project locally, ensure that Docker is installed on your machine. Follow these steps to set up the project:
+
+1. Clone this repository to your local machine:
+
+    ```bash
+    git clone https://github.com/enesagu/Object_detection_fastAPI_docker.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd Object_detection_fastAPI_docker
+    cd Object_Detection_Yolo_with_FastAPI
+    ```
+
+3. Build the Docker image and run the application:
+
+    ```bash
+    docker build -t object_detection .
+    docker run -d -p 8000:8000 object_detection
+
+    ```
+
+After successful execution of these steps, you can access the API at http://localhost:8000.
+
+## API Usage
+
+You can use the following API endpoint to detect objects:
+
+- **POST /detect/<label?>**: Use this endpoint to upload an image file and detect objects with a specific label. The label parameter is optional.
+
+Example request:
+
+```bash
+curl -X POST 'http://localhost:8000/detect/person' -H 'accept: application/json' -H 'Content-Type: multipart/form-data' -F 'image=@bus.JPG;type=image/jpeg'
+
+
+
+
+
+
 
