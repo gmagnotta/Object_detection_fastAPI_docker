@@ -39,10 +39,33 @@ You can use the following API endpoint to detect objects:
 
 - **POST /detect/<label?>**: Use this endpoint to upload an image file and detect objects with a specific label. The label parameter is optional.
 
-Example request:
-
+Example requests:
+COMMAND
 ```bash
 curl -X POST 'http://localhost:8000/detect/person' -H 'accept: application/json' -H 'Content-Type: multipart/form-data' -F 'image=@bus.JPG;type=image/jpeg'
+```
+
+Python:
+request.py
+```bash
+import requests
+
+# API endpoint URL
+api_endpoint = "http://localhost:8000/detect/"
+
+# Resim dosyası
+image_path = "test_image1_bus_people.jpg"
+
+# POST isteği yapma
+files = {"image": open(image_path, "rb")}
+response = requests.post(api_endpoint, files=files)
+
+# Yanıtı kontrol etme
+if response.status_code == 200:
+    result = response.json()
+    print("Detection Results:", result)
+else:
+    print("API request failed:", response.text)
 ```
 
 ## Design Decisions
