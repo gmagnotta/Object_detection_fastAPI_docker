@@ -4,7 +4,7 @@ import shutil
 import json
 from pathlib import Path
 from fastapi import FastAPI, Request, File, UploadFile
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 from ultralytics import YOLO
 
@@ -59,9 +59,9 @@ async def detect_objects(request: Request, image: UploadFile = File(...), label:
         shutil.copyfileobj(image.file, buffer)
 
     # Create ONNX model if not exist
-    onnx_model_path = 'yolov8n.onnx'
+    onnx_model_path = 'yolo11x.onnx'
     if not os.path.exists(onnx_model_path):
-        model = YOLO('yolov8n.pt')  
+        model = YOLO('yolo11x.pt')  
         model.export(format='onnx')  
 
     # Load the YOLO model
@@ -72,6 +72,7 @@ async def detect_objects(request: Request, image: UploadFile = File(...), label:
     result = onnx_model(source, save=True)
 
     # Process object detection results
+    result_file = []
     output = []
     for r in result:
         for box, value, prob in zip(r.boxes.xywh, r.boxes.cls, r.boxes.conf):
@@ -84,9 +85,10 @@ async def detect_objects(request: Request, image: UploadFile = File(...), label:
                 "y": int(y),
                 "width": int(w),
                 "height": int(h),
-                "confidence": confidence
+                "confidence": confidence,
             }
             output.append(entry)
+        result_file.append(r.save())
 
     # If label parameter is given, perform filtering
    
@@ -105,18 +107,21 @@ async def detect_objects(request: Request, image: UploadFile = File(...), label:
     # path the image
     image_path = os.path.join(uploads_dir, image.filename)
     
+    # saved file
+    saved_file = os.path.join(current_dir, result_file[0])
 
     # Encode the image file to Base64
     with open(image_path, "rb") as image_file:
         encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
 
 
-
     # Return the results # just return
-    return {
-        "image": encoded_image,
-        "objects": output,
-        "count": len(output)
-    }
+    # return {
+    #     #"image": encoded_image,
+    #     "objects": output
+    #     #"count": len(output)
+    # }
+
+    return FileResponse(saved_file)
 
 
