@@ -1,0 +1,13 @@
+# Use the Python image
+FROM registry.redhat.io/ubi9/python-39@sha256:6f89c966a1939d3fcd8919f1e823f1794721e68fb3b31388230529ff622eebef
+
+USER 0
+ADD . .
+RUN chown -R 1001:0 ./ && \
+    dnf install -y mesa-libGL
+USER 1001
+
+RUN pip install -r requirements.txt
+
+# Run the application
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
