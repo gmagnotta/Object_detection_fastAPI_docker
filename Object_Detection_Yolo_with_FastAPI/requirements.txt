@@ -80,8 +80,9 @@ torchvision==0.17.0
 tqdm==4.66.3
 typing_extensions==4.9.0
 tzdata==2023.4
-ultralytics==8.1.9
+ultralytics==8.3.87
 urllib3==2.2.2
 uvicorn==0.27.0.post1
 Werkzeug==3.0.6
 wrapt==1.14.1
+onnxslim==0.1.48
