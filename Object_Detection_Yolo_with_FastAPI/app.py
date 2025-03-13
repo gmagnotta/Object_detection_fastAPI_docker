@@ -59,9 +59,9 @@ async def detect_objects(request: Request, image: UploadFile = File(...), label:
         shutil.copyfileobj(image.file, buffer)
 
     # Create ONNX model if not exist
-    onnx_model_path = 'yolo11x.onnx'
+    onnx_model_path = 'yolo12x.onnx'
     if not os.path.exists(onnx_model_path):
-        model = YOLO('yolo11x.pt')  
+        model = YOLO('yolo12x.pt')  
         model.export(format='onnx')  
 
     # Load the YOLO model
