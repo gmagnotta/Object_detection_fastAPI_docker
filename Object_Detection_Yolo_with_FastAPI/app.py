@@ -17,6 +17,12 @@ app = FastAPI()
 # Specify the folder where uploaded files will be stored
 uploads_folder = Path("uploads")
 
+# Create ONNX model if not exist
+onnx_model_path = 'yolo12x.onnx'
+if not os.path.exists(onnx_model_path):
+    model = YOLO('yolo12x.pt')  
+    model.export(format='onnx')  
+
 # GET router for the index page
 @app.get("/")
 async def read_root(request: Request):
@@ -58,11 +64,8 @@ async def detect_objects(request: Request, image: UploadFile = File(...), label:
     with file_path.open("wb") as buffer:
         shutil.copyfileobj(image.file, buffer)
 
-    # Create ONNX model if not exist
-    onnx_model_path = 'yolo12x.onnx'
     if not os.path.exists(onnx_model_path):
-        model = YOLO('yolo12x.pt')  
-        model.export(format='onnx')  
+        return JSONResponse(status_code=400, content={"error": "ONNX Model not yet ready"})
 
     # Load the YOLO model
     onnx_model = YOLO(onnx_model_path, task='detect')
